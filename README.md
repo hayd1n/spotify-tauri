@@ -33,12 +33,12 @@ cargo tauri build
 Due to the fact that signing Mac apps requires the Apple Developer Program, which is available for an additional fee.  
 So I can't afford to sign apps at the moment.  
 
-So you may open the app with _**"ntust-auto-repeal-votes" is damaged and can't be opened. You should move it to the Trash. You should move it to the Trash.**_  
+So you may open the app with _**"Spotify Tauri" is damaged and can't be opened. You should move it to the Trash. You should move it to the Trash.**_  
 
 <img width="372" alt="damaged" src="https://github.com/CRT-HAO/spotify-tauri/assets/31580253/3ea62cd9-12bb-4e87-8a69-6082cd4ed394">
 
 ### Solution
 In order to bypass the signature verification, you will need to remove the attributes attached to the app by macOS using the following command.  
 ```bash
-xattr -cr /Applications/ntust-auto-repeal-votes.app
+xattr -cr /Applications/Spotify Tauri.app
 ```
