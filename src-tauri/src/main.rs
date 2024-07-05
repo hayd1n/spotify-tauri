@@ -14,8 +14,6 @@ fn main() {
         .setup(|app| {
             let main_window = app.handle().get_window("main").unwrap();
 
-            main_window.open_devtools();
-
             // include common.js
             main_window.eval(include_str!("../js/common.js")).unwrap();
 
