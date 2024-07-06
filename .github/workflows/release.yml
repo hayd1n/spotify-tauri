@@ -31,8 +31,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: enable cross-compile support (ubuntu only)
-        if: matrix.settings.platform == 'ubuntu-20.04'
+      - name: enable cross-compile support for arm64 (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-20.04' &&
+            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')
         uses: cyberjunk/gha-ubuntu-cross@v4
         with:
           arch: arm64
@@ -49,7 +50,8 @@ jobs:
         # webkitgtk 4.0 is for Tauri v1 - webkitgtk 4.1 is for Tauri v2.
 
       - name: install dependencies for arm64 (ubuntu only)
-        if: matrix.settings.platform == 'ubuntu-20.04'
+        if: matrix.settings.platform == 'ubuntu-20.04' &&
+            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')
         run: |
           sudo apt-get update
           sudo apt install aptitude
@@ -79,7 +81,8 @@ jobs:
             '' }}
 
       - name: setup Rust linker for arm64 (ubuntu only)
-        if: matrix.settings.platform == 'ubuntu-20.04'
+        if: matrix.settings.platform == 'ubuntu-20.04' &&
+            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')
         run: |
           mkdir ./.cargo
           touch ./.cargo/config.toml
@@ -87,6 +90,11 @@ jobs:
           [target.aarch64-unknown-linux-gnu] \n \
           linker = \"aarch64-linux-gnu-gcc\" \n \
           " >> ./.cargo/config.toml
+
+      - name: setup PKG_CONFIG_SYSROOT_DIR for arm64 (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-20.04' &&
+            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')
+        run: export PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu/
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
