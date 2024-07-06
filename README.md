@@ -5,8 +5,17 @@
 
 # Spotify Tauri
 
-An Unofficial Lightweight Spotify Client Alternative made with [Tauri](https://tauri.app/)  
+An Unofficial Lightweight Spotify Client Alternative made with [Tauri](https://tauri.app/)
+
 Support Windows, macOS, Linux
+
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
+[![Tauri](https://img.shields.io/badge/tauri-%2324C8DB.svg?style=for-the-badge&logo=tauri&logoColor=%23FFFFFF)](https://tauri.app/)
+[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 ## Screenshot
 
@@ -14,7 +23,9 @@ Support Windows, macOS, Linux
 
 ## Release
 
-[latest](https://github.com/CRT-HAO/spotify-tauri/releases)
+[![Download latest GitHub release](https://img.shields.io/github/v/release/CRT-HAO/spotify-tauri?style=for-the-badge)](https://github.com/CRT-HAO/spotify-tauri/releases)
+
+[![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/CRT-HAO/spotify-tauri/actions)
 
 ## Development
 
@@ -28,7 +39,7 @@ cargo tauri dev
 cargo tauri build
 ```
 
-## “Spotify Tauri” is damaged and can’t be opened. You should eject the disk image.
+## “Spotify Tauri” is damaged and can’t be opened.
 
 Due to the fact that signing Mac apps requires the Apple Developer Program, which is available for an additional fee.  
 So I can't afford to sign apps at the moment.  
@@ -40,5 +51,9 @@ So you may open the app with _**"Spotify Tauri" is damaged and can't be opened. 
 ### Solution
 In order to bypass the signature verification, you will need to remove the attributes attached to the app by macOS using the following command.  
 ```bash
-xattr -cr /Applications/Spotify Tauri.app
+xattr -cr /Applications/Spotify\ Tauri.app
 ```
+
+## License
+
+[![Licence](https://img.shields.io/github/license/CRT-HAO/spotify-tauri?style=for-the-badge)](./LICENSE)
