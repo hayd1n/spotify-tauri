@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "rootDir": "./src",
+    "strict": true,
+    "typeRoots": ["src/types"]
+  },
+  "include": ["src/**/*.ts"]
+}

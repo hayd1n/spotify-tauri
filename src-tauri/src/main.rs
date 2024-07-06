@@ -2,33 +2,47 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::Manager;
+use webbrowser::{open_browser, Browser};
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+const REPOSITORY_URL: &'static str = env!("CARGO_PKG_REPOSITORY");
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn open_url(url: &str) {
+    if open_browser(Browser::Default, &url).is_err() {
+        println!("open url {} failed", &url)
+    }
 }
 
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
-            let main_window = app.handle().get_window("main").unwrap();
+            let _main_window = app.app_handle().get_window("main").unwrap();
 
-            // include common.js
-            main_window.eval(include_str!("../js/common.js")).unwrap();
-
-            // include remove_elements.js
-            main_window
-                .eval(include_str!("../js/remove_elements.js"))
-                .unwrap();
-
-            // include optimize.js
-            main_window.eval(include_str!("../js/optimize.js")).unwrap();
+            // open devtools if is debug build
+            #[cfg(debug_assertions)]
+            _main_window.open_devtools();
 
             Ok(())
         })
+        .on_page_load(|window, _payload| {
+            if window.label() == "main" && window.url().host_str() == Some("open.spotify.com") {
+                // inject js
+                window
+                    .eval(
+                        format!(
+                            "var AppName = '{}'; var AppVersion = '{}'; var AppRepositoryUrl = '{}';",
+                            window.app_handle().package_info().package_name(),
+                            window.app_handle().package_info().version.to_string(),
+                            REPOSITORY_URL
+                        )
+                        .as_str(),
+                    )
+                    .unwrap();
+                window.eval(include_str!("../../dist/bundle.js")).unwrap();
+            }
+        })
         .plugin(tauri_plugin_window_state::Builder::default().build())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![open_url])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

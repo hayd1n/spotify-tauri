@@ -1,4 +1,4 @@
-const getElementsByXPath = (xpath, parent) => {
+function getElementsByXPath(xpath: string, parent?: Node) {
   let results = [];
   let query = document.evaluate(
     xpath,
@@ -11,11 +11,14 @@ const getElementsByXPath = (xpath, parent) => {
     results.push(query.snapshotItem(i));
   }
   return results;
-};
+}
 
-const addCSS = (css) =>
-  (document.head.appendChild(document.createElement("style")).innerHTML = css);
+function addCSS(css: string) {
+  document.head.appendChild(document.createElement("style")).innerHTML = css;
+}
 
-const sleep = (ms) => {
+function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-};
+}
+
+export { getElementsByXPath, addCSS, sleep };

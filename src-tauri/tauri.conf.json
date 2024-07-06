@@ -1,7 +1,8 @@
 {
   "build": {
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "pnpm run build",
     "devPath": "../src",
-    "distDir": "../src",
     "withGlobalTauri": true
   },
   "package": {

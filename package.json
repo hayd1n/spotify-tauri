@@ -1,0 +1,26 @@
+{
+  "name": "spotify-tauri",
+  "version": "0.1.0",
+  "author": "Hayden Chang <m831718@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c --watch",
+    "build": "rollup -c"
+  },
+  "keywords": [
+    "spotify",
+    "music",
+    "audio",
+    "tauri"
+  ],
+  "devDependencies": {
+    "@lopatnov/rollup-plugin-uglify": "^2.1.5",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@tauri-apps/api": "^1.6.0",
+    "@types/node": "^20.14.10",
+    "rollup": "^4.18.0",
+    "typescript": "^5.5.3"
+  }
+}
