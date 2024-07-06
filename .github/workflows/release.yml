@@ -91,11 +91,6 @@ jobs:
           linker = \"aarch64-linux-gnu-gcc\" \n \
           " >> ./.cargo/config.toml
 
-      - name: setup PKG_CONFIG_SYSROOT_DIR for arm64 (ubuntu only)
-        if: matrix.settings.platform == 'ubuntu-20.04' &&
-            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')
-        run: export PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu/
-
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
