@@ -1,6 +1,6 @@
 [package]
 name = "spotify-tauri"
-version = "0.1.0"
+version = "0.2.0"
 description = "Unofficial Lightweight Spotify Client"
 authors = ["Hayden Chang <m831718@gmail.com>"]
 repository = "https://github.com/CRT-HAO/spotify-tauri"
