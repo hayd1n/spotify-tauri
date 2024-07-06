@@ -31,34 +31,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: enable cross-compile support (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-20.04'
+        uses: cyberjunk/gha-ubuntu-cross@v4
+        with:
+          arch: arm64
+
       - name: install dependencies (ubuntu only)
         if: matrix.settings.platform == 'ubuntu-20.04'
         run: |
-          sudo dpkg --add-architecture arm64
-          sudo sed -i '/^deb /s/deb /deb [arch=amd64] /' /etc/apt/sources.list
-          sudo echo -e "\ndeb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy main restricted\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy universe\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates universe\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy multiverse\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates multiverse\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-backports main restricted universe multiverse\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-security main restricted\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-security universe\n\
-                        deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-security multiverse" >> /etc/apt/sources.list
-          sudo apt-get update && sudo apt-get upgrade -y
+          sudo apt-get update
           sudo apt-get install -y \
             libwebkit2gtk-4.0-dev \
             libappindicator3-dev \
             librsvg2-dev \
             patchelf
+        # webkitgtk 4.0 is for Tauri v1 - webkitgtk 4.1 is for Tauri v2.
+
+      - name: install dependencies for arm64 (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
           sudo apt-get install -y \
             gcc-aarch64-linux-gnu \
             libwebkit2gtk-4.0-dev:arm64 \
             libappindicator3-dev:arm64 \
             librsvg2-dev:arm64 \
+            libssl-dev:arm64 \
             patchelf:arm64
-        # webkitgtk 4.0 is for Tauri v1 - webkitgtk 4.1 is for Tauri v2.
 
       - name: setup node
         uses: actions/setup-node@v4
@@ -77,6 +77,16 @@ jobs:
             matrix.settings.platform == 'windows-latest' && 
               'aarch64-pc-windows-msvc,x86_64-pc-windows-msvc' || 
             '' }}
+
+      - name: setup Rust linker for arm64 (ubuntu only)
+        if: matrix.settings.platform == 'ubuntu-20.04'
+        run: |
+          mkdir ./.cargo
+          touch ./.cargo/config.toml
+          echo -e " \
+          [target.aarch64-unknown-linux-gnu] \n \
+          linker = \"aarch64-linux-gnu-gcc\" \n \
+          " >> ./.cargo/config.toml
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
