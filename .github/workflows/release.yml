@@ -104,6 +104,10 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG_CONFIG_SYSROOT_DIR: ${{ 
+            (matrix.settings.platform == 'ubuntu-20.04' &&
+            contains(matrix.settings.args, '--target aarch64-unknown-linux-gnu')) &&
+            '/usr/aarch64-linux-gnu/' || '' }}
         with:
           tagName: v__VERSION__ # the action automatically replaces __VERSION__ with the app version.
           releaseName: 'Spotify Tauri v__VERSION__'
