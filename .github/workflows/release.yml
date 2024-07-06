@@ -89,6 +89,7 @@ jobs:
           echo -e " \
           [target.aarch64-unknown-linux-gnu] \n \
           linker = \"aarch64-linux-gnu-gcc\" \n \
+          rustflags = "-C link-arg=—sysroot=/usr/aarch64-linux-gnu/" \n \
           " >> ./.cargo/config.toml
 
       - name: Rust cache
