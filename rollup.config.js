@@ -9,7 +9,6 @@ export default {
   output: {
     file: "dist/bundle.js",
     format: "esm",
-    name: "MyBundle",
   },
   plugins: [
     nodeResolve(),
