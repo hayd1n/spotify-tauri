@@ -2,6 +2,7 @@ name: 'Release CI'
 
 # on new version tag create
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
